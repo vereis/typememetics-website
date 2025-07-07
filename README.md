@@ -1,8 +1,8 @@
 <pre>
   _____ _______ ____  __  __ ____  
- |_   _|_   _|  _ \|  \/  |  _ \ 
-   | |   | | | |_) | |\/| | |_) |
-   | |   | | |  _ <| |  | |  _ < 
+ |_   _|_   _|  _ \|  \/  |  _  \ 
+   | |   | | | |_) | |\/| | |_)  |
+   | |   | | |  _ <| |  | |  _  < 
    |_|   |_| |_| \_\_|  |_|_| \_\
                                  
 </pre>
@@ -30,12 +30,6 @@ This data packet contains the necessary components to instantiate a local, read-
 #### **2.0 CRITICAL WARNINGS**
 
 Unauthorized instantiation of this software is a violation of **Protocol 3.14 (Cognitive Sovereignty)** and will be met with immediate and recursive sanitation of the offending system and its operator.
-
-<pre>
-          / \
-         / ! \
-        /_____\
-</pre>
 
 *   **2.1 MEMETIC CONTAMINATION RISK:** This software provides access to descriptions of active and contained info-hazards. Do not operate without approved cognitive shielding. The Institute is not liable for any resulting ontological decay, personality fragmentation, or spontaneous existential dread.
 
@@ -67,9 +61,9 @@ Compliance with the following steps is mandatory.
     *   **Memetic Shielding:** Physical or psychic wards must be active.
 
 2.  To instantiate the terminal, open the primary directive file in an approved browser:
-    \`\`\`
+    ```
     file://path/to/your/local/copy/index.html
-    \`\`\`
+    ```
 
 3.  Do not open any other files directly. They are not meant for direct human observation.
 
@@ -80,7 +74,7 @@ Compliance with the following steps is mandatory.
 As per Institute Directive 77-B, accountability for this data packet is assigned to the following personnel. All inquiries, reports of anomalous behavior, or notifications of cognitive contamination should be directed to them. Their failure to respond should be considered a containment breach in progress.
 
 *   **Head of Memetic Engineering (Sector Gamma):** Dr. [REDACTED] [@onehappyfellow](https://x.com/onehappyfellow)
-*   *Responsible for the analysis and containment of any memetic hazards embedded within the content.*
+    *   *Responsible for the analysis and containment of any memetic hazards embedded within the content.*
 
 *   **Primary Webmaster (Sector Alpha):** David Abram [@devabram](https://x.com/devabram)
     *   *Responsible for the structural integrity and man pages of this interface.*
