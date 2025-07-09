@@ -41,17 +41,17 @@
 <body>
   <div id="terminal" class="cursor"></div>
   <script>
-    const text = `The Institute would like to welcome you, Operative.
-This is your Mandatory Operative Protective Therapy Session
+    const text = `The goal of Protective Therapy Sessions (PTS) is to equip all Operatives
+with necessary mental and memetic capabilities to withstand cognitohazards
+you will encounter as part of your routine duties and field missions.
 
-SIMPLY TYPED LAMBDA CALCULUS
+The Institute prepared a Simply Typed Lambda Calculus (STLC) based therapy session.
+
+STLC is the most common memetically protective type-safe factor
+with virtually no side-effects.
 
 ... press any key to continue ...
 `;
-    function loadContent() {
-      const message = { type: "NEXT", payload: { url: "2.html" } };
-      window.parent.postMessage(message, "*");
-    }
     const terminal = document.getElementById("terminal");
     let i = 0;
 
@@ -61,10 +61,6 @@ SIMPLY TYPED LAMBDA CALCULUS
         i++;
         const delay = Math.random() * (35 - 15) + 15;
         setTimeout(type, delay);
-      } else {
-        console.log("Typing complete");
-        terminal.focus();
-        window.addEventListener('keydown', loadContent);
       }
     }
     window.onload = type;

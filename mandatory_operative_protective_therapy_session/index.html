@@ -88,12 +88,12 @@
         box-shadow: 0 0 10px #33FF33;
       }
       </style>
-      <a id="startButton" href="1.html" tabindex="0" autofocus>PRESS ANY KEY TO CONTINUE</a>
+      <div id="startButton" tabindex="0" autofocus>PRESS ANY KEY TO CONTINUE</div>
       <script>
-      const startButton = document.getElementById('startButton');
       const container = document.getElementById('crt');
       function loadContent() {
-        container.innerHTML = `<iframe src="1.html"></iframe>`;
+        window.removeEventListener('keydown', enterFullscreenAndLoad);
+        handleMessage({ data: { type: "NEXT", payload: { url: "1.html" } } });
       }
       function enterFullscreenAndLoad(e) {
         e.preventDefault();
@@ -110,8 +110,7 @@
           loadContent();
         }
       }
-      window.addEventListener('keydown', () => startButton.click());
-      startButton.addEventListener('click', enterFullscreenAndLoad);
+      window.addEventListener('keydown', enterFullscreenAndLoad);
       </script>
   </div>
   <svg xmlns="http://www.w3.org/2000/svg">
@@ -134,8 +133,22 @@
     </text>
   </svg>
   <script>
-    const container = document.getElementById('crt');
 
+    function handleMessage(event) {
+        const { type, payload } = event.data;
+        console.log("Received message:", type, payload);
+        if (type === "NEXT") {
+          const container = document.getElementById("crt");
+          container.innerHTML = `<iframe id="iframe" tabindex="0" src="${payload.url}"></iframe>`;
+          const iframe = document.getElementById('iframe');
+          iframe.addEventListener('load', () => {
+            console.log("Iframe loaded:", payload.url);
+            iframe.focus();
+          });
+        }
+      };
+
+    window.addEventListener("message", handleMessage);
     function scheduleGlitch() {
       const delay = Math.random() * (25000 - 5000) + 5000;
       setTimeout(() => {
@@ -145,9 +158,6 @@
       }, delay);
     }
     scheduleGlitch();
-
-
-
   </script>
 </body>
 </html>
