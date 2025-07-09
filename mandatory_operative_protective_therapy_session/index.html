@@ -48,27 +48,6 @@
       animation: glitch 0.3s linear;
     }
 
-    #startButton {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: monospace;
-      font-size: 16px;
-      padding: 10px 20px;
-      text-decoration: none;
-      background: #000;
-      color: #33FF33;
-      border: 2px solid #33FF33;
-      border-radius: 4px;
-      display: inline-block;
-      text-align: center;
-    }
-    #startButton:focus {
-      outline: none;
-      box-shadow: 0 0 10px #33FF33;
-    }
-
     svg {
       position: fixed;
       top: 0;
@@ -86,6 +65,29 @@
 </head>
 <body>
   <div class="crt-container" id="crt">
+    <style>
+      #startButton {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: monospace;
+        font-size: 24px;
+        padding: 10px 20px;
+        text-decoration: none;
+        background: #000;
+        color: #33FF33;
+        border: 2px solid #33FF33;
+        border-radius: 4px;
+        display: inline-block;
+        text-align: center;
+        font-weight: bold;
+      }
+      #startButton:focus {
+        outline: none;
+        box-shadow: 0 0 10px #33FF33;
+      }
+      </style>
       <a id="startButton" href="1.html" tabindex="0" autofocus>PRESS ANY KEY TO CONTINUE</a>
       <script>
       const startButton = document.getElementById('startButton');
@@ -127,8 +129,10 @@
     <rect x="0" y="0" width="100%" height="100%" filter="url(#noise)" opacity="0.07"/>
     <rect x="0" y="0" width="100%" height="100%" fill="url(#scanlines)"/>
     <rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" fill="none" stroke="#33FF33" stroke-opacity="0.1" stroke-width="2"/>
+    <text x="50%" y="40%" text-anchor="middle" fill="#33FF33" font-size="18vw" font-weight="bold" font-family="monospace" opacity="0.15">
+      S.T.L.C.
+    </text>
   </svg>
-
   <script>
     const container = document.getElementById('crt');
 

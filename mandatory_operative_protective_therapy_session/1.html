@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: black;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 20px;
+      padding-top: 120px;
+      font-size: 1.5em;
+      line-height: 1.2;
+    }
+
+    #terminal {
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      border-left: 2px solid #33ff33;
+      padding-left: 10px;
+      animation: flicker 0.15s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; }
+      100% { opacity: 0.9; }
+    }
+
+    .cursor::after {
+      content: "█";
+      animation: blink 0.8s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal" class="cursor"></div>
+  <script>
+    const text = `The Institute would like to welcome you, Operative.
+This is your Mandatory Operative Protective Therapy Session
+
+SIMPLY TYPED LAMBDA CALCULUS
+
+... press any key to continue ...
+`;
+    const terminal = document.getElementById("terminal");
+    let i = 0;
+
+    function type() {
+      if (i < text.length) {
+        terminal.textContent += text.charAt(i);
+        i++;
+        const delay = Math.random() * (120 - 30) + 30;
+        setTimeout(type, delay);
+      }
+    }
+    window.onload = type;
+  </script>
+</body>
+</html>
+
