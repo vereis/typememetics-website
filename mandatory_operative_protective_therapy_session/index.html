@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    .crt-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      font-family: monospace;
+      font-size: 16px;
+      line-height: 1.2;
+      overflow: hidden;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); opacity: 1; filter: none; }
+      20% { transform: translate(-2px, 2px) skew(1deg,1deg); filter: contrast(0.8) brightness(1.5) hue-rotate(10deg) blur(1px); }
+      40% { transform: translate(2px,-2px) skew(-1deg,-1deg); filter: contrast(1.2) brightness(0.8) hue-rotate(-10deg) blur(1px); }
+      60% { transform: translate(-1px,1px) skew(0.5deg,0.5deg); opacity: 0.9; }
+      80% { transform: translate(1px,-1px) skew(-0.5deg,-0.5deg); opacity: 1; }
+      100% { transform: translate(0); opacity: 1; filter: none; }
+    }
+
+    .glitch {
+      animation: glitch 0.3s linear;
+    }
+
+    #startButton {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: monospace;
+      font-size: 16px;
+      padding: 10px 20px;
+      text-decoration: none;
+      background: #000;
+      color: #33FF33;
+      border: 2px solid #33FF33;
+      border-radius: 4px;
+      display: inline-block;
+      text-align: center;
+    }
+    #startButton:focus {
+      outline: none;
+      box-shadow: 0 0 10px #33FF33;
+    }
+
+    svg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+    }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="crt-container" id="crt">
+      <a id="startButton" href="1.html" tabindex="0" autofocus>PRESS ANY KEY TO CONTINUE</a>
+      <script>
+      const startButton = document.getElementById('startButton');
+      const container = document.getElementById('crt');
+      function loadContent() {
+        container.innerHTML = `<iframe src="1.html"></iframe>`;
+      }
+      function enterFullscreenAndLoad(e) {
+        e.preventDefault();
+        const docEl = document.documentElement;
+        if (docEl.requestFullscreen) {
+          docEl.requestFullscreen().then(loadContent);
+        } else if (docEl.webkitRequestFullscreen) {
+          docEl.webkitRequestFullscreen();
+          loadContent();
+        } else if (docEl.msRequestFullscreen) {
+          docEl.msRequestFullscreen();
+          loadContent();
+        } else {
+          loadContent();
+        }
+      }
+      window.addEventListener('keydown', () => startButton.click());
+      startButton.addEventListener('click', enterFullscreenAndLoad);
+      </script>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="noise">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+
+      <pattern id="scanlines" patternUnits="userSpaceOnUse" width="100%" height="6">
+        <line x1="0" y1="0" x2="100%" y2="0" stroke="#33FF33" stroke-opacity="0.15" stroke-width="1"/>
+      </pattern>
+    </defs>
+
+    <rect x="0" y="0" width="100%" height="100%" filter="url(#noise)" opacity="0.07"/>
+    <rect x="0" y="0" width="100%" height="100%" fill="url(#scanlines)"/>
+    <rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" fill="none" stroke="#33FF33" stroke-opacity="0.1" stroke-width="2"/>
+  </svg>
+
+  <script>
+    const container = document.getElementById('crt');
+
+    function scheduleGlitch() {
+      const delay = Math.random() * (25000 - 5000) + 5000;
+      setTimeout(() => {
+        container.classList.add('glitch');
+        setTimeout(() => container.classList.remove('glitch'), 300);
+        scheduleGlitch();
+      }, delay);
+    }
+    scheduleGlitch();
+
+
+
+  </script>
+</body>
+</html>
