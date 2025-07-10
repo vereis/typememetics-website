@@ -52,6 +52,10 @@ with virtually no side-effects.
 
 ... press any key to continue ...
 `;
+    function loadContent() {
+      const message = { type: "NEXT", payload: { url: "3.html" } };
+      window.parent.postMessage(message, "*");
+    }
     const terminal = document.getElementById("terminal");
     let i = 0;
 
@@ -61,6 +65,9 @@ with virtually no side-effects.
         i++;
         const delay = Math.random() * (35 - 15) + 15;
         setTimeout(type, delay);
+      } else {
+        terminal.focus();
+        window.addEventListener('keydown', loadContent);
       }
     }
     window.onload = type;

@@ -41,15 +41,20 @@
 <body>
   <div id="terminal" class="cursor"></div>
   <script>
-    const text = `The Institute would like to welcome you, Operative.
-This is your Mandatory Operative Protective Therapy Session
+    const text = `Congratulations, Operative.
 
-SIMPLY TYPED LAMBDA CALCULUS
+The Institute is proud of you for finishing your
+Mandatory Operative Protective Therapy Session.
 
-... press any key to continue ...
+We hope you feel refreshed, memetically protected
+and ready for your next mission
+
+The Institute is thankful for your hard work.
+
+... press any key to return to reality ...
 `;
     function loadContent() {
-      const message = { type: "NEXT", payload: { url: "2.html" } };
+      const message = { type: "END", payload: { url: "https://typememetics.institute/" } };
       window.parent.postMessage(message, "*");
     }
     const terminal = document.getElementById("terminal");
@@ -62,7 +67,6 @@ SIMPLY TYPED LAMBDA CALCULUS
         const delay = Math.random() * (35 - 15) + 15;
         setTimeout(type, delay);
       } else {
-        console.log("Typing complete");
         terminal.focus();
         window.addEventListener('keydown', loadContent);
       }

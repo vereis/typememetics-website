@@ -146,6 +146,9 @@
             iframe.focus();
           });
         }
+        if (type === "END") {
+          window.location.href = payload.url;
+        }
       };
 
     window.addEventListener("message", handleMessage);
