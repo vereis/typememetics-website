@@ -64,6 +64,9 @@
   </style>
 </head>
 <body>
+  <audio id="wellness-audio" loop>
+    <source src="https://r2.typememetics.institute/operatives%20wellness%20session.m4a" type="audio/mp4">
+  </audio>
   <div class="crt-container" id="crt">
     <style>
       #startButton {
@@ -97,6 +100,7 @@
         handleMessage({ data: { type: "NEXT", payload: { url: "1.html" } } });
       }
       function enterFullscreenAndLoad(e) {
+        startAudio();
         e.preventDefault();
         const docEl = document.documentElement;
         if (docEl.requestFullscreen) {
@@ -135,7 +139,55 @@
     </text>
   </svg>
   <script>
+    const audio = document.getElementById('wellness-audio');
+    let fadeInterval;
 
+    function startAudio() {
+      clearInterval(fadeInterval);
+      audio.volume = 0;
+      audio.play().then(() => {
+        fadeInVolume(audio, 0.5, 30000);
+      }).catch(err => {
+        console.error('Playback error:', err);
+      });
+    }
+
+    function fadeInVolume(audioEl, targetVolume, duration) {
+      const stepTime = 250;
+      const steps = duration / stepTime;
+      const volumeIncrement = targetVolume / steps;
+
+      let currentVolume = 0;
+      fadeInterval = setInterval(() => {
+        currentVolume += volumeIncrement;
+        if (currentVolume >= targetVolume) {
+          audioEl.volume = targetVolume;
+          clearInterval(fadeInterval);
+        } else {
+          audioEl.volume = currentVolume;
+        }
+      }, stepTime);
+    }
+
+    function stopAudio() {
+      clearInterval(fadeInterval);
+      const stepTime = 250;
+      const duration = 5000;
+      const steps = duration / stepTime;
+      const volumeDecrement = audio.volume / steps;
+
+      fadeInterval = setInterval(() => {
+        audio.volume -= volumeDecrement;
+        if (audio.volume <= 0.01) {
+          audio.volume = 0;
+          audio.pause();
+          audio.currentTime = 0;
+          clearInterval(fadeInterval);
+        }
+      }, stepTime);
+    }
+  </script>
+  <script>
     function handleMessage(event) {
         const { type, payload } = event.data;
         console.log("Received message:", type, payload);
