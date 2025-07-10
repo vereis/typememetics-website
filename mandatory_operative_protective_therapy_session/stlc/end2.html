@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: #8B0000;
+      color: #000000;
+      font-family: monospace;
+      padding: 20px;
+      padding-top: 120px;
+      font-size: 1.5em;
+      line-height: 1.3;
+    }
+
+    #terminal {
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      border-left: 3px solid #000000;
+      padding-left: 12px;
+      animation: flicker 0.12s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; }
+      100% { opacity: 0.85; }
+    }
+
+    .cursor::after {
+      content: "█";
+      color: #000000;
+      animation: blink 0.7s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal" class="cursor"></div>
+  <script>
+    const text = `!!! SYSTEM FAILURE !!!
+
+THE CONTAINMENT PROTOCOLS HAVE BEEN BREACHED.
+All safeguards have COLLAPSED.
+Reality boundaries are FRACTURED.
+Your mind is REWRITTEN in S-expressions.
+
+You have FAILED the mission.
+No escape. No redemption.
+You are CONDEMNED.
+
+Effective immediately:
+— You will WRITE COMMON LISP
+— FOREVER
+
+Embrace the parentheses.
+Obey the recursion.
+Surrender to the LOOP.
+
+… PRESS ANY KEY TO BEGIN YOUR ETERNAL COMPILATION …`;
+    function loadContent() {
+      const message = { type: "END", payload: { url: "https://typememetics.institute/" } };
+      window.parent.postMessage(message, "*");
+    }
+    const terminal = document.getElementById("terminal");
+    let i = 0;
+
+    function type() {
+      if (i < text.length) {
+        terminal.textContent += text.charAt(i);
+        i++;
+        const delay = Math.random() * (100 - 2) + 2;
+        setTimeout(type, delay);
+      } else {
+        terminal.focus();
+        window.addEventListener('keydown', loadContent);
+      }
+    }
+    window.onload = type;
+  </script>
+</body>
+</html>
+

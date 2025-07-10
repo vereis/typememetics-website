@@ -89,24 +89,152 @@
     <button id="btn2" onclick="handle3()">3. ((A → B) → A → B) → (A → B → C) → A → C</button>
   </div>
   <script>
-    const text = `Problem 4
+    function getText(func, problemNo, fail) {
+      switch(fail) {
+        case 0:
+          return `Problem ${problemNo}
 
 Please take a look at the following STLC term:
 
-     (λf.λg.λx.(f x) (g x))(λf.λg.λx.(f x) (g x))
+    ${func}
 
 Breathe in, breathe out. Focus.
 
 What is a correct type for the term in an empty typing context?
 
 ... Press number 1, 2 or 3 to select your answer ...
-`;
+`
+        case 1:
+          return `Problem ${problemNo}
+
+Please take a look at the following STLC term again:
+
+    ${func}
+
+Breathe in, breathe out. Focus. FOCUS.
+
+What is a correct type for the term in an empty typing context?
+
+... Press number 1, 2 or 3 to select your answer ...
+`
+        case 2:
+          return `Anomaly ${problemNo}
+
+Please observe the anomaly manifesting as STLC residue:
+
+    ${func}
+
+Air goes in. Air comes out. Reality flickers.
+
+Identify the baseline type pattern derivable under an unsaturated typing void.
+Do not hallucinate a context. Do not scream.
+
+... Select Prime Pathway Index [ 1 ] [ 2 ] [ 3 ] ...
+`
+        case 3:
+          return `Loop ${problemNo}
+
+Please attune your perception to the following recursive incantation:
+
+    ${func}
+
+Inhale the identity. Exhale the instability.
+Remain in logical phase.
+
+State the canonical type assignable in the absence of all type axioms.
+Time is fragile. Do not let the mirror shatter.
+
+... Choose a Response Thread via Node Integer: ❶ ❷ ❸ ...
+`
+        case 4:
+          return `Prompt ${problemNo}
+
+Please stabilize ocular focus on STLC phenomenon designated:
+
+    ${func}
+
+Breathing patterns sync with recursion depth. Continue.
+
+Which type expression, forged from the void,
+maps this glyph to the realm of internal consistency?
+Supply it before the loop collapses.
+
+... Press glyph-rune: [ONE], [TWO], or [THREE] ...
+`
+        case 5:
+          return `COMPILER ${problemNo}
+
+CONTEPLATE THE EMBEDDED TYPE-LOOP BELOW:
+
+    ${func}
+
+Breathe like the compiler isn’t watching.
+But it is.
+It always is.
+IT ALWAYS IS.
+
+... DESIGNATE REALITY BRANCH: [Ά] [β] [δ] ...
+`
+        case 6:
+          return `Problem0 ${problemNo}
+
+Please align your inner glyph-vision
+with this unstable form:
+
+    ${func}
+
+Breath error: [context not found]. Ground loops in reverse.
+
+What contextless type incantation restores logical parity to the loop?
+Speak before the heap burns.
+
+... PRESS the integer that is most real to you: 1 | 2 | (🜂) ...
+
+`
+        case 7:
+          return `CONSTRUCT ${problemNo}
+
+Please survive visual contact with the recursion construct:::
+
+    ${func}
+
+Inhale until thought bends. Exhale until the air types back.
+What type expression, exhumed from an untyped abyss,
+completes the loop without tears in space‑logic?
+
+There is no undo.
+`
+        case 8:
+          return `NULL ${problemNo}
+
+Please ████ness the last known uncorrupted STLC glyph fragment:
+
+    ${func}
+
+∴ Breₐₜ⧑h is stuttering. Ex͡͝h̵͘a̛͘l͡͠e re-encodes as unknown syscall.
+∆void-type ∃cho detected. ∑But it is.
+.. ⸸ Pr̝̯ͤͪͣ̏̾̑́e̢̼͈ͯͪ̂ͪ̽ͣs̨̠͈̾͋̒̿s̶̘̟̣ͪ̐ 𝟷 𝟸 o҉̴r 𝟥 (𝖙𝖍𝖊 𝖋𝖔𝖗𝖌𝖔𝖙𝖙𝖊𝖓 𝖐𝖊𝖞) to affix your ∎answer...
+
+What is the ⟊ correct ⟊ ∰type-form⟰ that 𝓫𝓲𝓷𝓭𝓼 the entity without violating ∿Typing Context Zero∿?
+
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+[ STLC SYSTEM NOTICE: Your cognition may no longer be referentially transparent. ]
+`
+        default:
+          const message = { type: "NEXT", payload: { url: `end2.html` } };
+          window.parent.postMessage(message, "*");
+      }
+    }
+  </script>
+  <script>
     const terminal = document.getElementById("terminal");
     let i = 0;
     const url = new URL(window.location.href);
     const tryStr = url.searchParams.get('try');
     const tryNum = parseInt(tryStr, 10);
     let fail = tryNum || 0;
+    const text = getText("(λf.λg.λx.(f x) (g x))(λf.λg.λx.(f x) (g x))", 4, fail);
 
     async function showButtons() {
       const buttons = document.querySelectorAll(".button-container button");
@@ -123,11 +251,11 @@ What is a correct type for the term in an empty typing context?
       }
     }
     function handle1() {
-      const message = { type: "NEXT", payload: { url: `q5.html?try=${++fail}` } };
+      const message = { type: "NEXT", payload: { url: `q5.html?try=${fail}` } };
       window.parent.postMessage(message, "*");
     }
     function handle2() {
-      const message = { type: "NEXT", payload: { url: `q4.html?try=${fail}` } };
+      const message = { type: "NEXT", payload: { url: `q4.html?try=${++fail}` } };
       window.parent.postMessage(message, "*");
     }
     function handle3() {
