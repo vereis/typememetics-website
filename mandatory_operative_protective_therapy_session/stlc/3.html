@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background-color: black;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 20px;
+      padding-top: 120px;
+      font-size: 1.5em;
+      line-height: 1.2;
+    }
+
+    #terminal {
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      border-left: 2px solid #33ff33;
+      padding-left: 10px;
+      animation: flicker 0.15s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; }
+      100% { opacity: 0.9; }
+    }
+
+    .cursor::after {
+      content: "█";
+      animation: blink 0.8s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal" class="cursor"></div>
+  <script>
+    const text = `The Institute would like you to refamiliarise yourself with the typing rules of STLC:
+
+  x : A ∈ Γ                Γ ⊢ M : A → B    Γ ⊢ N : A
+------------- (var)        --------------------------- (app)
+  Γ ⊢ x : A                        Γ ⊢ M N : B
+
+                  Γ,x : A ⊢ M : B
+                 ------------------ (lam)
+                  Γ ⊢ λx.M : A → B
+
+... press any key to continue ...
+`;
+    function loadContent() {
+      const message = { type: "NEXT", payload: { url: "q1.html" } };
+      window.parent.postMessage(message, "*");
+    }
+    const terminal = document.getElementById("terminal");
+    let i = 0;
+
+    function type() {
+      if (i < text.length) {
+        terminal.textContent += text.charAt(i);
+        i++;
+        const delay = Math.random() * (35 - 15) + 15;
+        setTimeout(type, delay);
+      } else {
+        terminal.focus();
+        window.addEventListener('keydown', loadContent);
+      }
+    }
+    window.onload = type;
+  </script>
+</body>
+</html>
+
