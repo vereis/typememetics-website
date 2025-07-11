@@ -1,244 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITSMR :: Certificate of Completion</title>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <style>
-        body {
-            font-family: serif;
-            background-color: #333;
-            color: #1a1a1a;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-            padding: 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITSMR :: Certificate of Completion</title>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <style>
+    body {
+      font-family: serif;
+      background-color: #333;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 20px;
+    }
 
-        .diploma-container {
-            width: 1000px;
-            max-width: 95%;
-            padding: 50px;
-            border: 15px double #4a4a4a;
-            background-color: #f4f1e9;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            position: relative;
-        }
+    .diploma-container {
+      width: 1000px;
+      max-width: 95%;
+      padding: 50px;
+      border: 15px double #4a4a4a;
+      background-color: #f4f1e9;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
 
-        .logo {
-            width: 120px;
-            margin-bottom: 20px;
-        }
+    .logo {
+      width: 120px;
+      margin-bottom: 20px;
+    }
 
-        h1 {
-            font-size: 48px;
-            margin: 0;
-            font-weight: 700;
-        }
+    h1 {
+      font-size: 48px;
+      margin: 0;
+      font-weight: 700;
+    }
 
-        h2 {
-            font-size: 24px;
-            color: #555;
-            margin: 10px 0 30px 0;
-            font-weight: 400;
-        }
+    h2 {
+      font-size: 24px;
+      color: #555;
+      margin: 10px 0 30px 0;
+      font-weight: 400;
+    }
 
-        .certify-text {
-            font-size: 18px;
-            margin: 30px 0 10px 0;
-        }
+    .certify-text {
+      font-size: 18px;
+      margin: 30px 0 10px 0;
+    }
 
-        .operative-name {
-            font-size: 40px;
-            font-weight: 700;
-            font-style: italic;
-            border-bottom: 2px solid #333;
-            display: inline-block;
-            padding: 0 20px 5px 20px;
-            margin-bottom: 30px;
-        }
+    .operative-name {
+      font-size: 40px;
+      font-weight: 700;
+      font-style: italic;
+      border-bottom: 2px solid #333;
+      display: inline-block;
+      padding: 0 20px 5px 20px;
+      margin-bottom: 30px;
+    }
 
-        .description {
-            font-size: 16px;
-            line-height: 1.6;
-            max-width: 700px;
-            margin: 0 auto 40px auto;
-        }
+    .description {
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+    }
 
-        .signatures {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 60px;
-            width: 100%;
-        }
+    .signatures {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 60px;
+      width: 100%;
+    }
 
-        .signature-block {
-            width: 40%;
-            text-align: center;
-        }
+    .signature-block {
+      width: 40%;
+      text-align: center;
+    }
 
-        .signature-line {
-            border-top: 2px solid #333;
-            padding-top: 5px;
-            font-family: 'Source Code Pro', monospace;
-            font-size: 14px;
-            font-weight: 700;
-        }
+    .signature-line {
+      border-top: 2px solid #333;
+      padding-top: 5px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
 
-        .seal {
-            position: absolute;
-            bottom: 40px;
-            right: 50px;
-            width: 100px;
-            height: 100px;
-            border: 5px solid #a88f5a;
-            border-radius: 50%;
-            color: #a88f5a;
-            text-align: center;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            line-height: 1.2;
-        }
+    .seal {
+      position: absolute;
+      bottom: 40px;
+      right: 50px;
+      width: 100px;
+      height: 100px;
+      border: 5px solid #a88f5a;
+      border-radius: 50%;
+      color: #a88f5a;
+      text-align: center;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      line-height: 1.2;
+    }
 
-        .seal-inner {
-            border: 2px solid #a88f5a;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .seal-inner {
+      border: 2px solid #a88f5a;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .print-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+    .print-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-        .signature-area {
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 5px;
-        }
+    .signature-area {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+    }
 
-        .signature-svg {
-            width: 250px;
-            height: 70px;
-        }
+    .signature-svg {
+      width: 250px;
+      height: 70px;
+    }
 
-        .binary-signature {
-            font-family: monospace;
-            font-size: 14px;
-            word-break: break-all;
-            line-height: 1.4;
-            color: #444;
-        }
+    .binary-signature {
+      font-family: monospace;
+      font-size: 14px;
+      word-break: break-all;
+      line-height: 1.4;
+      color: #444;
+    }
 
-        @media print {
-            body {
-                background-color: #fff;
-                padding: 0;
-            }
-            .diploma-container {
-                width: 100%;
-                height: 100vh;
-                max-width: 100%;
-                margin: 0;
-                padding: 40px;
-                border: 10px double #000;
-                box-shadow: none;
-                box-sizing: border-box;
-            }
-            .print-button {
-                display: none;
-            }
-            .seal {
-                color: #000;
-                border-color: #000;
-            }
-            .seal-inner {
-                border-color: #000;
-            }
-        }
-    </style>
+    @media print {
+      body {
+        background-color: #fff;
+        padding: 0;
+      }
+
+      .diploma-container {
+        width: 100%;
+        height: 100vh;
+        max-width: 100%;
+        margin: 0;
+        padding: 40px;
+        border: 10px double #000;
+        box-shadow: none;
+        box-sizing: border-box;
+      }
+
+      .print-button {
+        display: none;
+      }
+
+      .seal {
+        color: #000;
+        border-color: #000;
+      }
+
+      .seal-inner {
+        border-color: #000;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <div class="diploma-container" id="diploma-container">
-        <img src="/images/itsmr-logo.png" alt="ITSMR Logo" class="logo">
-        <h1>Certificate of Completion</h1>
-        <h2>Mandatory Operative Protective Therapy Session</h2>
+  <div class="diploma-container" id="diploma-container">
+    <img src="/images/itsmr-logo.png" alt="ITSMR Logo" class="logo">
+    <h1>Certificate of Completion</h1>
+    <h2>Mandatory Operative Protective Therapy Session</h2>
 
-        <p class="certify-text">This is to certify that</p>
-        <span class="operative-name" id="operative-name">[NAME NOT FOUND]</span>
+    <p class="certify-text">This is to certify that</p>
+    <span class="operative-name" id="operative-name">[NAME NOT FOUND]</span>
 
-        <p class="description">
-            has successfully completed the foundational course in cognitive fortification and demonstrated a satisfactory level of mental resilience against baseline info-hazards. The subject has proven their ability to apply <strong>Simply Typed Lambda Calculus (STLC)</strong> as a memetically protective factor, ensuring a stable cognitive state with virtually no side-effects.
-        </p>
+    <p class="description">
+      has successfully completed the foundational course in cognitive fortification and demonstrated a satisfactory
+      level of mental resilience against baseline info-hazards. The subject has proven their ability to apply
+      <strong>Simply Typed Lambda Calculus (STLC)</strong> as a memetically protective factor, ensuring a stable
+      cognitive state with virtually no side-effects.
+    </p>
 
-        <div class="signatures">
-            <div class="signature-block">
-                <div class="signature-area">
-                    <svg class="signature-svg" viewBox="0 0 260 100">
-                        <path fill="none" stroke="#333" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" d="M 20,70 C 25,25 80,20 70,65 S 90,100 115,65 C 125,40 140,45 150,65 Q 160,85 170,65 C 180,45 200,50 210,70 S 240,90 250,50"/>
-                    </svg>
-                </div>
-                <p class="signature-line">Dr. [REDACTED]<br>Head of Cognitive Fortification</p>
-            </div>
-            <div class="signature-block">
-                <div class="signature-area">
-                    <div class="binary-signature">
-                      01001111 01000011 01000001 01001101 01001100<br> 01010011 01010101 01000011 01001011 01010011
-                    </div>
-                </div>
-                <p class="signature-line">ARGUS System Daemon<br>Automated Verification Unit</p>
-            </div>
+    <div class="signatures">
+      <div class="signature-block">
+        <div class="signature-area">
+          <svg class="signature-svg" viewBox="0 0 260 100">
+            <path fill="none" stroke="#333" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"
+              d="M 20,70 C 25,25 80,20 70,65 S 90,100 115,65 C 125,40 140,45 150,65 Q 160,85 170,65 C 180,45 200,50 210,70 S 240,90 250,50" />
+          </svg>
         </div>
-
-        <div class="seal">
-            <div class="seal-inner">
-                OFFICIAL<br>I.T.S.M.R.<br>SEAL
-            </div>
+        <p class="signature-line">Dr. [REDACTED]<br>Head of Cognitive Fortification</p>
+      </div>
+      <div class="signature-block">
+        <div class="signature-area">
+          <div class="binary-signature">
+            01001111 01000011 01000001 01001101 01001100<br> 01010011 01010101 01000011 01001011 01010011
+          </div>
         </div>
-
+        <p class="signature-line">ARGUS System Daemon<br>Automated Verification Unit</p>
+      </div>
     </div>
 
-    <button class="print-button" id="print-button">Print Certificate</button>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function escapeHTML(str) {
-                const p = document.createElement('p');
-                p.textContent = str;
-                return p.innerHTML;
-            }
+    <div class="seal">
+      <div class="seal-inner">
+        OFFICIAL<br>I.T.S.M.R.<br>SEAL
+      </div>
+    </div>
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const name = urlParams.get('name');
-            const nameElement = document.getElementById('operative-name');
+  </div>
 
-            if (name) {
-                nameElement.innerHTML = escapeHTML(name);
-            } else {
-                nameElement.innerHTML = escapeHTML('[OPERATIVE NAME REDACTED]');
-            }
-        });
-    </script>
-    <script>
-    document.getElementById('print-button').addEventListener('click', () => {
+  <button class="print-button" id="print-button" disabled>Print Certificate</button>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      function escapeHTML(str) {
+        const p = document.createElement('p');
+        p.textContent = str;
+        return p.innerHTML;
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const name = urlParams.get('name');
+      const nameElement = document.getElementById('operative-name');
+
+      if (name) {
+        nameElement.innerHTML = escapeHTML(name);
+      } else {
+        nameElement.innerHTML = escapeHTML('[OPERATIVE NAME REDACTED]');
+      }
       const node = document.getElementById('diploma-container');
       html2canvas(node, {
         useCORS: true,
@@ -247,23 +253,32 @@
         scale: window.devicePixelRatio
       }).then(canvas => {
         canvas.toBlob(blob => {
-          if (!blob) {
-            return alert('Could not convert to blob!');
-          }
-
-          const item = new ClipboardItem({ 'image/png': blob });
-
-          navigator.clipboard.write([item])
-            .then(() => {
-              alert('✅ Image copied to clipboard! \n Post this diploma on X and include @typememetics!');
-            })
-            .catch(err => {
-              console.error(err);
-              alert('❌ Copy failed—make sure you’re on HTTPS and your browser supports the Clipboard API. \n Screenshot the diploma, share it on X and include @typememetics!');
-            });
+          window.blob = blob;
+          document.getElementById('print-button').disabled = false;
         }, 'image/png');
       });
     });
   </script>
+  <script>
+    document.getElementById('print-button').addEventListener('click', () => {
+      const node = document.getElementById('diploma-container');
+      let blob = window.blob;
+      if (!blob) {
+        return alert('Could not convert to blob!');
+      }
+
+      const item = new ClipboardItem({ 'image/png': blob });
+
+      navigator.clipboard.write([item])
+        .then(() => {
+          alert('✅ Image copied to clipboard! \n Post this diploma on X and include @typememetics!');
+        })
+        .catch(err => {
+          console.error(err);
+          alert('❌ Copy failed—make sure you’re on HTTPS and your browser supports the Clipboard API. \n Screenshot the diploma, share it on X and include @typememetics!');
+        });
+    });
+  </script>
 </body>
+
 </html>
