@@ -85,6 +85,9 @@
   <audio id="wellness-audio" loop>
     <source src="https://r2.typememetics.institute/operatives%20wellness%20-%20plain.m4a" type="audio/mp4">
   </audio>
+  <audio id="end2">
+    <source src="https://r2.typememetics.institute/end2.m4a" type="audio/mp4">
+  </audio>
   <div class="crt-container" id="crt">
     <style>
       #startButton {
@@ -158,6 +161,7 @@
   </svg>
   <script>
     const audio = document.getElementById('wellness-audio');
+    const end2 = document.getElementById('end2');
     let fadeInterval;
 
     function startAudio() {
@@ -223,6 +227,7 @@
         }
         if (type === "AUDIO_STOP") {
           stopAudio();
+          end2.play();
         }
       };
 
