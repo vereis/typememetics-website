@@ -76,9 +76,13 @@ SIMPLY TYPED LAMBDA CALCULUS
       } else {
         terminal.focus();
         window.addEventListener('keydown', loadContent);
-        window.addEventListener('pointerdown', loadContent);
+        if ('PointerEvent' in window) {
+          window.addEventListener('pointerdown', loadContent);
+        } else {
+          window.addEventListener('mousedown', loadContent);
+          window.addEventListener('touchstart', loadContent);
+        }
       }
-    }
     window.onload = type;
   </script>
 </body>
