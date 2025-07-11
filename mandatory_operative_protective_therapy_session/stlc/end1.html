@@ -16,7 +16,6 @@
         0 0 6px #33ff33,
         0 0 12px #002200;
     }
-
     @media only screen and (max-width: 600px) {
       body {
         padding-top: 40px;
@@ -24,7 +23,6 @@
         line-height: 1.5;
       }
     }
-
     #terminal {
       white-space: pre-wrap;
       overflow-wrap: break-word;
@@ -32,26 +30,103 @@
       padding-left: 10px;
       animation: flicker 0.15s infinite alternate;
     }
-
     @keyframes flicker {
       0% { opacity: 1; }
       100% { opacity: 0.9; }
     }
-
     .cursor::after {
       content: "█";
       animation: blink 0.8s steps(1) infinite;
     }
-
     @keyframes blink {
       0% { opacity: 1; }
       50% { opacity: 0; }
       100% { opacity: 1; }
     }
+
+    #input-section {
+      margin-top: 30px;
+    }
+    .diploma-text {
+      color: #33ff33;
+      animation: flicker 0.15s infinite alternate;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    #input-form {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .input-label {
+      color: #33ff33;
+      animation: flicker 0.15s infinite alternate;
+      padding-right: 10px;
+      min-width: 60px;
+    }
+    #command-input {
+      background-color: black;
+      border: 1px solid #33ff33;
+      color: #33ff33;
+      font-family: monospace;
+      font-size: 1em;
+      text-shadow: inherit;
+      flex-grow: 1;
+      outline: none;
+      padding: 5px;
+    }
+    #command-input:focus {
+      box-shadow: 0 0 8px #33ff33;
+    }
+    #submit-button {
+      background-color: black;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      font-family: monospace;
+      font-size: 1em;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-left: 10px;
+      text-shadow: inherit;
+    }
+    #submit-button:hover {
+      background-color: #33ff33;
+      color: black;
+      text-shadow: none;
+    }
+    #return-button {
+      background-color: black;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      font-family: monospace;
+      font-size: 1em;
+      padding: 8px 15px;
+      cursor: pointer;
+      text-shadow: inherit;
+      width: 100%;
+    }
+    #return-button:hover {
+      background-color: #33ff33;
+      color: black;
+      text-shadow: none;
+    }
   </style>
 </head>
 <body>
   <div id="terminal" class="cursor"></div>
+
+  <div id="input-section" style="display: none;">
+    <div class="diploma-text">Get your diploma</div>
+    <form id="input-form">
+      <label for="command-input" class="input-label">Name:</label>
+      <input type="text" id="command-input" name="operativeName" autocomplete="off">
+      <button type="submit" id="submit-button">EXECUTE</button>
+    </form>
+    <br />
+    <button id="return-button">RETURN TO REALITY</button>
+  </div>
+
   <script>
     const text = `Congratulations, Operative.
 
@@ -59,18 +134,30 @@ The Institute is proud of you for finishing your
 Mandatory Operative Protective Therapy Session.
 
 We hope you feel refreshed, memetically protected
-and ready for your next mission
+and ready for your next mission.
 
 The Institute is thankful for your hard work.
 
-... press any key to return to reality ...
-`;
+... Awaiting your command ...`;
+
+    const terminal = document.getElementById("terminal");
+    const inputSection = document.getElementById("input-section");
+    const inputForm = document.getElementById("input-form");
+    const commandInput = document.getElementById("command-input");
+    const returnButton = document.getElementById("return-button");
+    let i = 0;
+
+    function handleSubmission(event) {
+      event.preventDefault();
+      const message = { type: "END", payload: { url: `https://typememetics.institute/mandatory_operative_protective_therapy_session/stlc/diploma.html?name=${commandInput.value}` } };
+      commandInput.value = '';
+      window.parent.postMessage(message, "*");
+    }
+
     function loadContent() {
       const message = { type: "END", payload: { url: "https://typememetics.institute/" } };
       window.parent.postMessage(message, "*");
     }
-    const terminal = document.getElementById("terminal");
-    let i = 0;
 
     function type() {
       if (i < text.length) {
@@ -79,11 +166,14 @@ The Institute is thankful for your hard work.
         const delay = Math.random() * (35 - 15) + 15;
         setTimeout(type, delay);
       } else {
-        terminal.focus();
-        window.addEventListener('keydown', loadContent);
-        window.addEventListener('pointerdown', loadContent);
+        terminal.classList.remove("cursor");
+        inputSection.style.display = "block";
+        commandInput.focus();
+        inputForm.addEventListener('submit', handleSubmission);
+        returnButton.addEventListener('click', loadContent);
       }
     }
+
     window.onload = type;
   </script>
 </body>
