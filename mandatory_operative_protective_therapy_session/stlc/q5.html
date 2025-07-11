@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,8 +30,7 @@
       }
 
       #terminal {
-        max-height: 800px
-        overflow-y: auto;
+        max-height: 800px overflow-y: auto;
         -webkit-overflow-scrolling: touch;
       }
     }
@@ -44,8 +44,13 @@
     }
 
     @keyframes flicker {
-      0% { opacity: 1; }
-      100% { opacity: 0.9; }
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0.9;
+      }
     }
 
     .cursor::after {
@@ -54,9 +59,17 @@
     }
 
     @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0; }
-      100% { opacity: 1; }
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
     }
 
     .button-container {
@@ -85,7 +98,7 @@
     }
 
     .button-container button:hover {
-      background: rgba(51,255,51,0.1);
+      background: rgba(51, 255, 51, 0.1);
     }
 
     .button-container button:focus {
@@ -105,18 +118,19 @@
     }
   </style>
 </head>
+
 <body>
   <div id="terminal" class="cursor"></div>
   <br />
   <br />
   <div class="button-container">
     <button id="btn0" onclick="handle1()">1. ((A → B → C) → A → B) → (A → B → C) → A → C</button>
-    <button id="btn1" onclick="handle2()">2. ((A → B) → A → B → C) → (A → B → C) → A → C</button>
+    <button id="btn1" onclick="handle2()">2. (A → B → C) → A → (D → B) → D → C</button>
     <button id="btn2" onclick="handle3()">3. ((A → B) → A → B) → (A → B → C) → A → C</button>
   </div>
   <script>
     function getText(func, problemNo, fail) {
-      switch(fail) {
+      switch (fail) {
         case 0:
           return `Problem ${problemNo}
 
@@ -288,7 +302,7 @@ What is the ⟊ correct ⟊ ∰type-form⟰ that 𝓫𝓲𝓷𝓭𝓼 the entity
       const message = { type: "NEXT", payload: { url: `q5.html?try=${++fail}` } };
       window.parent.postMessage(message, "*");
     }
-    document.addEventListener("keydown", function(event) {
+    document.addEventListener("keydown", function (event) {
       switch (event.key) {
         case "1":
           handle1();
@@ -319,7 +333,5 @@ What is the ⟊ correct ⟊ ∰type-form⟰ that 𝓫𝓲𝓷𝓭𝓼 the entity
     window.onload = type;
   </script>
 </body>
+
 </html>
-
-
-
