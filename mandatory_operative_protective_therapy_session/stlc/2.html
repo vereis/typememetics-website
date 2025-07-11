@@ -80,12 +80,13 @@ with virtually no side-effects.
       } else {
         terminal.focus();
         window.addEventListener('keydown', loadContent);
-        window.addEventListener('click', loadContent);
-        if ('PointerEvent' in window) {
-          window.addEventListener('pointerdown', loadContent);
+        if (navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome")) {
+          document.addEventListener('mousedown', loadContent, true);
+          document.addEventListener('touchstart', loadContent, { "passive": false });
+          document.body.addEventListener('mousedown', loadContent, true);
+          document.body.addEventListener('touchstart', loadContent, { "passive": false });
         } else {
-          window.addEventListener('mousedown', loadContent);
-          window.addEventListener('touchstart', loadContent);
+          window.addEventListener('pointerdown', loadContent);
         }
       }
     }
