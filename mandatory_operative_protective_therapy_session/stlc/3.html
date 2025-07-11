@@ -59,18 +59,19 @@
   <script>
     const text = `The Institute would like you to refamiliarise yourself with the typing rules of STLC:
 
+(var):
   x : A ∈ Γ
-------------- (var)
+-------------
   Γ ⊢ x : A
 
-
+(app):
   Γ ⊢ M : A → B    Γ ⊢ N : A
------------------------------- (app)
+------------------------------
        Γ ⊢ M N : B
 
-
+(lam):
  Γ,x : A ⊢ M : B
------------------- (lam)
+------------------
  Γ ⊢ λx.M : A → B
 
 ... press any key to continue ...
