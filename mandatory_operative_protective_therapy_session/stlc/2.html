@@ -80,6 +80,7 @@ with virtually no side-effects.
       } else {
         terminal.focus();
         window.addEventListener('keydown', loadContent);
+        window.addEventListener('click', loadContent);
         if ('PointerEvent' in window) {
           window.addEventListener('pointerdown', loadContent);
         } else {
