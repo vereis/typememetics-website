@@ -19,15 +19,15 @@ function calculateDepartment() {
   const urlParams = new URLSearchParams(window.location.search);
 
   const responses = {};
-  for (let i = 1; i <= 30; i++) {
+  for (let i = 1; i <= 37; i++) {
     responses[`q${i}`] = parseInt(urlParams.get(`q${i}`)) || 0;
   }
 
   const totalAnswered = Object.values(responses).filter(val => val > 0).length;
-  if (totalAnswered < 30) {
+  if (totalAnswered < 37) {
     document.getElementById('result').innerHTML = `
       <font color="red"><b>INCOMPLETE ASSESSMENT</b></font><br><br>
-      You have only answered ${totalAnswered} out of 30 questions.<br>
+      You have only answered ${totalAnswered} out of 37 questions.<br>
       <a href="index.html">Please complete the full assessment.</a>
     `;
     return;
@@ -122,6 +122,11 @@ function calculateDepartment() {
   if (responses.q1 <= 4) enterpriseScore += 1;
   if (responses.q16 <= 4) enterpriseScore += 1;
   if (responses.q17 <= 4) enterpriseScore += 1;
+  if (responses.q31 >= 6) enterpriseScore += 4;
+  if (responses.q31 >= 5) enterpriseScore += 2;
+  if (responses.q32 >= 6) enterpriseScore += 4;
+  if (responses.q32 >= 5) enterpriseScore += 2;
+  if (responses.q33 >= 5) enterpriseScore += 3;
 
   if (enterpriseScore >= 12) {
     displayEnterpriseResult();
@@ -313,6 +318,38 @@ function calculateDepartment() {
   }
   if (responses.q30 >= 7) {
     adaScore -= 0.3;
+  }
+
+  if (responses.q34 >= 6) {
+    rustScore += responses.q34 * 1.5;
+  }
+  if (responses.q34 <= 3) {
+    adaScore += (4 - responses.q34) * 1.2;
+    haskellScore += (4 - responses.q34) * 0.8;
+  }
+
+  if (responses.q35 >= 6) {
+    haskellScore += responses.q35 * 2.5;
+  }
+  if (responses.q35 >= 5) {
+    haskellScore += responses.q35 * 1.2;
+    adaScore += responses.q35 * 0.5;
+  }
+
+  if (responses.q36 >= 6) {
+    ocamlScore += responses.q36 * 1.8;
+  }
+  if (responses.q36 >= 5) {
+    haskellScore += responses.q36 * 0.8;
+    adaScore += responses.q36 * 0.6;
+  }
+
+  if (responses.q37 >= 6) {
+    haskellScore += responses.q37 * 2.0;
+  }
+  if (responses.q37 >= 5) {
+    haskellScore += responses.q37 * 1.5;
+    ocamlScore += responses.q37 * 0.8;
   }
 
   rustScore = Math.max(0, rustScore);

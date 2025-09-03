@@ -33,7 +33,14 @@ const languages = [
   { id: 'q27', name: 'R', desc: 'Statistical computing, domain-specific, functional elements, data analysis' },
   { id: 'q28', name: 'ClojureScript', desc: 'Clojure compiled to JavaScript, functional, immutable, browser-based' },
   { id: 'q29', name: 'Perl', desc: 'Regular expressions, "there\'s more than one way to do it", cryptic syntax' },
-  { id: 'q30', name: 'Fortran', desc: 'Scientific computing, legacy HPC, mathematical libraries, fixed-format' }
+  { id: 'q30', name: 'Fortran', desc: 'Scientific computing, legacy HPC, mathematical libraries, fixed-format' },
+  { id: 'q31', name: 'F#', desc: 'Functional-first .NET language, type inference, enterprise integration' },
+  { id: 'q32', name: 'VB.NET', desc: 'Microsoft\'s approachable .NET language, enterprise RAD development, Visual Basic heritage' },
+  { id: 'q33', name: 'COBOL', desc: 'Legacy enterprise mainframe language, COBOL-85 standard, business data processing' },
+  { id: 'q34', name: 'Zig', desc: 'Modern systems language, compile-time safety, C interoperability, manual memory management' },
+  { id: 'q35', name: 'Idris', desc: 'Dependently typed functional language, theorem proving, total functions, research-oriented' },
+  { id: 'q36', name: 'Prolog', desc: 'Logic programming, declarative paradigm, pattern matching, AI applications' },
+  { id: 'q37', name: 'Elm', desc: 'Pure functional frontend language, no runtime exceptions, functional reactive programming' }
 ];
 
 function shuffleArray(array) {
@@ -66,7 +73,7 @@ function generateLanguageRows() {
 }
 
 function validateAssessment() {
-  const totalQuestions = 30;
+  const totalQuestions = 37;
   const unanswered = [];
 
   for (let i = 1; i <= totalQuestions; i++) {
@@ -86,7 +93,7 @@ function validateAssessment() {
   }
 
   if (unanswered.length > 0) {
-    alert(`ASSESSMENT INCOMPLETE\n\nYou must answer all ${totalQuestions} questions before submission.\n\nUnanswered questions: ${unanswered.join(', ')}\n\nFailure to complete the full assessment may result in assignment to the JavaScript Containment Division.`);
+    alert(`ASSESSMENT INCOMPLETE\n\nYou must answer all ${totalQuestions} questions before submission.\n\nUnanswered questions: ${unanswered.join(', ')}`);
     return false;
   }
 
@@ -164,7 +171,7 @@ window.onload = function() {
   <font size="-1">
     NOTICE: This assessment is mandatory for all new Institute personnel.
     Failure to complete may result in assignment to the JavaScript Containment Division.
-    All 30 questions must be answered for valid departmental assignment.
+    All 37 questions must be answered for valid departmental assignment.
     <br><br>
     <font color="red">MEMETIC COUNTERMEASURE:</font> Language presentation order is randomized
     to prevent position bias and memorization-based gaming attempts.
@@ -177,7 +184,7 @@ window.onload = function() {
 
 <script>
 function randomizeAnswers() {
-  const totalQuestions = 30;
+  const totalQuestions = 37;
 
   for (let i = 1; i <= totalQuestions; i++) {
     const radios = document.getElementsByName(`q${i}`);
