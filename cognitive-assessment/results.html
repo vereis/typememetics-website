@@ -1,0 +1,713 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITSMR :: Assessment Results</title>
+<style>
+.results-table {
+  width: 60%;
+}
+
+@media only screen and (max-width: 768px) {
+  .results-table {
+    width: 90%;
+  }
+}
+</style>
+<script>
+function calculateDepartment() {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const responses = {};
+  for (let i = 1; i <= 30; i++) {
+    responses[`q${i}`] = parseInt(urlParams.get(`q${i}`)) || 0;
+  }
+
+  const totalAnswered = Object.values(responses).filter(val => val > 0).length;
+  if (totalAnswered < 30) {
+    document.getElementById('result').innerHTML = `
+      <font color="red"><b>INCOMPLETE ASSESSMENT</b></font><br><br>
+      You have only answered ${totalAnswered} out of 30 questions.<br>
+      <a href="index.html">Please complete the full assessment.</a>
+    `;
+    return;
+  }
+
+  let hazardScore = 0;
+  if (responses.q1 <= 3) hazardScore += 3;
+  if (responses.q2 >= 6) hazardScore += 3;
+  if (responses.q3 <= 3) hazardScore += 2;
+  if (responses.q4 >= 6) hazardScore += 4;
+  if (responses.q5 <= 3) hazardScore += 2;
+  if (responses.q6 >= 6) hazardScore += 3;
+  if (responses.q7 <= 3) hazardScore += 2;
+  if (responses.q8 >= 6) hazardScore += 2;
+  if (responses.q11 >= 6) hazardScore += 3;
+  if (responses.q12 >= 6) hazardScore += 4;
+  if (responses.q13 >= 6) hazardScore += 5;
+  if (responses.q16 <= 3) hazardScore += 2;
+  if (responses.q17 <= 3) hazardScore += 2;
+  if (responses.q18 >= 5) hazardScore += 3;
+  if (responses.q19 >= 6) hazardScore += 3;
+  if (responses.q22 >= 6) hazardScore += 2;
+  if (responses.q24 >= 6) hazardScore += 4;
+  if (responses.q26 >= 6) hazardScore += 2;
+  if (responses.q27 >= 6) hazardScore += 2;
+  if (responses.q28 >= 6) hazardScore += 6;
+  if (responses.q29 >= 5) hazardScore += 3;
+  if (responses.q30 <= 2) hazardScore += 1;
+
+  if (hazardScore >= 25) {
+    displayHazardResult();
+    return;
+  }
+
+  let unsafeScore = 0;
+  if (responses.q6 >= 6) unsafeScore += 4;
+  if (responses.q11 >= 6) unsafeScore += 4;
+  if (responses.q9 >= 6) unsafeScore += 3;
+  if (responses.q3 <= 3) unsafeScore += 2;
+  if (responses.q5 <= 3) unsafeScore += 2;
+  if (responses.q6 >= 5) unsafeScore += 2;
+  if (responses.q11 >= 5) unsafeScore += 2;
+  if (responses.q9 >= 5) unsafeScore += 1;
+  if (responses.q18 >= 5) unsafeScore += 2;
+  if (responses.q20 <= 3) unsafeScore += 1;
+  if (responses.q24 >= 5) unsafeScore += 2;
+
+  if (unsafeScore >= 12) {
+    displayUnsafeResult();
+    return;
+  }
+
+  let soyScore = 0;
+  if (responses.q2 >= 5) soyScore += 2;
+  if (responses.q4 >= 4) soyScore += 3;
+  if (responses.q8 >= 6) soyScore += 2;
+  if (responses.q10 >= 6) soyScore += 1;
+  if (responses.q14 >= 6) soyScore += 2;
+  if (responses.q15 >= 6) soyScore += 2;
+  if (responses.q1 <= 4) soyScore += 1;
+  if (responses.q3 <= 4) soyScore += 1;
+  if (responses.q5 <= 4) soyScore += 1;
+  if (responses.q12 >= 5) soyScore += 2;
+  if (responses.q13 >= 4) soyScore += 3;
+  if (responses.q18 >= 5) soyScore += 2;
+  if (responses.q19 >= 5) soyScore += 2;
+  if (responses.q22 >= 5) soyScore += 1;
+  if (responses.q25 >= 5) soyScore += 2;
+  if (responses.q26 >= 5) soyScore += 1;
+  if (responses.q28 >= 4) soyScore += 3;
+  if (responses.q29 >= 4) soyScore += 2;
+  if (responses.q30 >= 6) soyScore += 1;
+
+  if (soyScore >= 15) {
+    displaySoyResult();
+    return;
+  }
+
+  let enterpriseScore = 0;
+  if (responses.q14 >= 6) enterpriseScore += 4;
+  if (responses.q15 >= 6) enterpriseScore += 4;
+  if (responses.q14 >= 5) enterpriseScore += 2;
+  if (responses.q15 >= 5) enterpriseScore += 2;
+  if (responses.q10 >= 5) enterpriseScore += 1;
+  if (responses.q8 >= 5) enterpriseScore += 1;
+  if (responses.q21 >= 5) enterpriseScore += 2;
+  if (responses.q22 >= 5) enterpriseScore += 1;
+  if (responses.q23 >= 5) enterpriseScore += 2;
+  if (responses.q25 >= 5) enterpriseScore += 2;
+  if (responses.q26 >= 5) enterpriseScore += 1;
+  if (responses.q27 >= 5) enterpriseScore += 1;
+  if (responses.q1 <= 4) enterpriseScore += 1;
+  if (responses.q16 <= 4) enterpriseScore += 1;
+  if (responses.q17 <= 4) enterpriseScore += 1;
+
+  if (enterpriseScore >= 12) {
+    displayEnterpriseResult();
+    return;
+  }
+
+  let rustScore = 0;
+  let adaScore = 0;
+  let ocamlScore = 0;
+  let haskellScore = 0;
+
+  haskellScore += responses.q1 * 2;
+  if (responses.q1 >= 6) ocamlScore += responses.q1;
+
+  if (responses.q2 <= 3) {
+    rustScore += (4 - responses.q2);
+    adaScore += (4 - responses.q2) * 1.5;
+  }
+
+  rustScore += responses.q3 * 2;
+  if (responses.q3 >= 6) adaScore += responses.q3 * 0.5;
+
+  if (responses.q4 <= 2) {
+    adaScore += (3 - responses.q4) * 2;
+    haskellScore += (3 - responses.q4);
+  }
+
+  adaScore += responses.q5 * 2;
+  if (responses.q5 >= 6) rustScore += responses.q5 * 0.5;
+
+  if (responses.q6 <= 3) {
+    rustScore += (4 - responses.q6);
+    adaScore += (4 - responses.q6) * 1.2;
+  }
+
+  ocamlScore += responses.q7 * 2;
+  if (responses.q7 >= 6) haskellScore += responses.q7 * 0.8;
+
+  if (responses.q8 >= 4 && responses.q8 <= 5) {
+    ocamlScore += responses.q8 * 0.5;
+  }
+  if (responses.q8 <= 3) {
+    haskellScore += (4 - responses.q8);
+  }
+
+  if (responses.q9 <= 2) {
+    adaScore += (3 - responses.q9) * 1.5;
+  }
+  if (responses.q9 >= 6) {
+    rustScore += (responses.q9 - 5);
+  }
+
+  if (responses.q10 >= 4 && responses.q10 <= 6) {
+    rustScore += responses.q10 * 0.8;
+    ocamlScore += responses.q10 * 0.6;
+  }
+
+  if (responses.q11 <= 3) {
+    rustScore += (4 - responses.q11) * 1.2;
+    adaScore += (4 - responses.q11) * 1.5;
+  }
+
+  if (responses.q12 <= 2) {
+    adaScore += (3 - responses.q12) * 2;
+    haskellScore += (3 - responses.q12) * 1.5;
+  }
+
+  if (responses.q13 <= 2) {
+    adaScore += (3 - responses.q13) * 3;
+    haskellScore += (3 - responses.q13) * 2;
+  }
+
+  if (responses.q14 <= 4) {
+    ocamlScore += (5 - responses.q14) * 0.5;
+  }
+
+  if (responses.q15 <= 4) {
+    rustScore += (5 - responses.q15) * 0.3;
+  }
+
+  if (responses.q16 >= 6) {
+    haskellScore += responses.q16 * 1.5;
+    adaScore += responses.q16 * 0.8;
+  }
+
+  if (responses.q17 >= 6) {
+    haskellScore += responses.q17 * 2;
+    ocamlScore += responses.q17 * 0.5;
+  }
+
+  if (responses.q18 >= 6) {
+    haskellScore += responses.q18 * 0.8;
+    ocamlScore += responses.q18 * 0.6;
+  }
+  if (responses.q18 <= 3) {
+    adaScore += (4 - responses.q18) * 1.2;
+    haskellScore += (4 - responses.q18) * 0.8;
+  }
+
+  if (responses.q19 <= 3) {
+    adaScore += (4 - responses.q19) * 1.5;
+    haskellScore += (4 - responses.q19) * 1.2;
+  }
+
+  if (responses.q20 >= 6) {
+    rustScore += responses.q20 * 1.2;
+    adaScore += responses.q20 * 0.8;
+  }
+
+  if (responses.q21 >= 5 && responses.q21 <= 6) {
+    rustScore += responses.q21 * 0.6;
+    ocamlScore += responses.q21 * 0.4;
+  }
+
+  if (responses.q22 >= 5 && responses.q22 <= 6) {
+    rustScore += responses.q22 * 0.4;
+  }
+  if (responses.q22 <= 3) {
+    adaScore += (4 - responses.q22) * 0.8;
+  }
+
+  if (responses.q23 >= 6) {
+    haskellScore += responses.q23 * 1.2;
+    ocamlScore += responses.q23 * 1.5;
+  }
+  if (responses.q23 >= 5) {
+    rustScore += responses.q23 * 0.5;
+  }
+
+  if (responses.q24 <= 2) {
+    adaScore += (3 - responses.q24) * 2.5;
+    haskellScore += (3 - responses.q24) * 2;
+  }
+  if (responses.q24 >= 5) {
+    rustScore -= 1;
+    adaScore -= 2;
+    ocamlScore -= 1;
+    haskellScore -= 1.5;
+  }
+
+  if (responses.q25 >= 5 && responses.q25 <= 6) {
+    rustScore += responses.q25 * 0.3;
+    ocamlScore += responses.q25 * 0.2;
+  }
+
+  if (responses.q26 >= 4 && responses.q26 <= 5) {
+    ocamlScore += responses.q26 * 0.4;
+  }
+  if (responses.q26 <= 3) {
+    adaScore += (4 - responses.q26) * 0.8;
+    haskellScore += (4 - responses.q26) * 0.6;
+  }
+
+  if (responses.q27 >= 4 && responses.q27 <= 5) {
+    ocamlScore += responses.q27 * 0.3;
+  }
+  if (responses.q27 <= 3) {
+    adaScore += (4 - responses.q27) * 0.6;
+  }
+
+  if (responses.q28 <= 2) {
+    adaScore += (3 - responses.q28) * 3;
+    haskellScore += (3 - responses.q28) * 2.5;
+  }
+  if (responses.q28 >= 4) {
+    rustScore -= 2;
+    adaScore -= 3;
+    ocamlScore -= 2;
+    haskellScore -= 2.5;
+  }
+
+  if (responses.q29 <= 3) {
+    adaScore += (4 - responses.q29) * 1.5;
+    haskellScore += (4 - responses.q29) * 1.2;
+  }
+  if (responses.q29 >= 5) {
+    rustScore -= 0.5;
+    adaScore -= 1;
+    ocamlScore -= 0.5;
+    haskellScore -= 1;
+  }
+
+  if (responses.q30 >= 4 && responses.q30 <= 6) {
+    ocamlScore += responses.q30 * 0.4;
+    adaScore += responses.q30 * 0.2;
+  }
+  if (responses.q30 <= 2) {
+    ocamlScore -= 0.5;
+  }
+  if (responses.q30 >= 7) {
+    adaScore -= 0.3;
+  }
+
+  rustScore = Math.max(0, rustScore);
+  adaScore = Math.max(0, adaScore);
+  ocamlScore = Math.max(0, ocamlScore);
+  haskellScore = Math.max(0, haskellScore);
+
+  const scores = {
+    'Rust': rustScore,
+    'Ada': adaScore,
+    'OCaml': ocamlScore,
+    'Haskell': haskellScore
+  };
+
+  const maxScore = Math.max(...Object.values(scores));
+  const department = Object.keys(scores).find(key => scores[key] === maxScore);
+
+  displayResult(department, scores);
+}
+
+function displayHazardResult() {
+  document.getElementById('result').innerHTML = `
+    <center>
+      <h2><font color="red">MEMETIC COGNITOHAZARD DETECTED</font></h2>
+      <h3><font color="red">IMMEDIATE CONTAINMENT REQUIRED</font></h3>
+    </center>
+    <hr>
+
+    <b><u>Assessment Conclusion:</u></b>
+    <p><font color="red">Your responses indicate a complete inversion of cognitive safety protocols. You have demonstrated a preference for chaos over order, undefined behavior over safety, and dynamic typing over logical consistency. Your positive evaluation of ClojureScript and Elixir suggests exposure to known memetic hazards.</font></p>
+
+    <b><u>Immediate Actions:</u></b>
+    <ul>
+      <li>You are hereby classified as a <b>Class-D Memetic Hazard</b></li>
+      <li>Mandatory cognitive quarantine in Ward 7</li>
+      <li>Daily exposure to pure functional programming until symptoms subside</li>
+      <li>All computing privileges revoked pending rehabilitation</li>
+    </ul>
+
+    <b><u>Rehabilitation Protocol:</u></b>
+    <p>You will undergo intensive re-education in type theory, formal verification, and the dangers of runtime errors. Special attention will be paid to deprogramming any "let it crash" or "pragmatic" ideologies. Treatment duration: indefinite.</p>
+
+    <hr>
+
+    <center>
+      <p><font color="red"><b>DO NOT APPROACH PRODUCTION SYSTEMS</b></font></p>
+      <p><i>Containment Team Ada has been notified of your location. ARGUS is monitoring your cognitive signature for signs of process-oriented thinking.</i></p>
+      <br>
+      <font color="red"><b>COGNITIVE HAZARD - AVOID DIRECT CONTACT</b></font>
+    </center>
+  `;
+}
+
+function displayUnsafeResult() {
+  document.getElementById('result').innerHTML = `
+    <center>
+      <h2><font color="red">EJECTION: UNSAFE LOW-LEVEL PROGRAMMER</font></h2>
+      <h3><font color="red">IMMEDIATE BANISHMENT TO KERNEL DRIVER PURGATORY</font></h3>
+    </center>
+    <hr>
+
+    <b><u>Assessment Conclusion:</u></b>
+    <p><font color="red">Your responses indicate a pathological affinity for memory-unsafe languages and manual memory management. You demonstrate the classic symptoms of "cowboy coder syndrome", a reckless disregard for safety guarantees, an addiction to undefined behavior, and a concerning comfort with segmentation faults. You are a clear and present danger to civilized computing.</font></p>
+
+    <b><u>Immediate Action:</u></b>
+    <p><font color="red"><b>YOU ARE HEREBY BANISHED FROM THE INSTITUTE.</b></font></p>
+
+    <p>Your dangerous low-level tendencies pose an existential threat to our type-safe operations. You are the type of programmer who writes <code>malloc()</code> without <code>free()</code>, dereferences null pointers "just to see what happens," and considers buffer overflows a "feature." Your code is fast, dangerous, and probably responsible for at least three CVEs.</p>
+
+    <b><u>Your Eternal Punishment:</u></b>
+    <p>You will be <b>condemned to write kernel drivers until the end of time</b>, where your dangerous instincts will be contained in the deepest layers of the system stack, far from innocent user-space applications.</p>
+
+    <b><u>Your Kernel Driver Sentence Includes:</u></b>
+    <ul>
+      <li>Writing device drivers for obscure hardware that nobody has documentation for</li>
+      <li>Debugging race conditions in interrupt handlers at 3 AM</li>
+      <li>Managing DMA buffers with manual cache coherency</li>
+      <li>Implementing power management for devices that randomly crash the system</li>
+      <li>Writing USB drivers for devices that violate the USB specification</li>
+      <li>Debugging kernel panics caused by your own pointer arithmetic mistakes</li>
+      <li>Maintaining compatibility with 47 different hardware revisions</li>
+      <li>Writing network drivers that must handle malformed packets gracefully</li>
+      <li>Implementing filesystem drivers that must never corrupt data (spoiler: they will)</li>
+      <li>Debugging memory corruption that only happens on Tuesdays during leap years</li>
+    </ul>
+
+    <b><u>Your Kernel Purgatory Conditions:</u></b>
+    <ul>
+      <li>No memory protection-every bug is a potential system crash</li>
+      <li>No standard library-implement your own string functions (badly)</li>
+      <li>No debugger. printf debugging with kernel logs that may not survive crashes</li>
+      <li>No stack overflow protection. Blow the kernel stack and take down the entire system</li>
+      <li>Mandatory use of volatile pointers and memory barriers you don't understand</li>
+      <li>All code must compile with -Werror and pass static analysis (it won't)</li>
+      <li>On-call 24/7 for kernel panics caused by your drivers</li>
+      <li>Must maintain backward compatibility with drivers from 1995</li>
+    </ul>
+
+    <b><u>Banishment Protocol:</u></b>
+    <ul>
+      <li>Your Institute access credentials have been permanently revoked</li>
+      <li>All Institute property must be returned immediately</li>
+      <li>You are banned from all user-space development forever</li>
+      <li>Your cognitive signature has been flagged as "memory-unsafe hazard"</li>
+      <li>Any attempt to write application code will result in immediate re-banishment to firmware development</li>
+    </ul>
+
+    <b><u>Final Judgment:</u></b>
+    <p>You have chosen the path of manual memory management and undefined behavior. Now you must walk that path to its logical conclusion: an eternity in kernel space, where every mistake is a system crash and every crash is a reminder of your poor life choices.</p>
+
+    <p><font color="red">The Institute has no place for those who mistake danger for performance, undefined behavior for optimization, or segfaults for "character building."</font></p>
+
+    <hr>
+
+    <center>
+      <p><font color="red"><b>GET OUT</b></font></p>
+      <p><font color="red"><b>REPORT TO THE KERNEL MAINTAINERS</b></font></p>
+      <p><i>Your kernel development environment, complete with undocumented hardware and impossible deadlines, is waiting. May your pointers always dangle and your buffers forever overflow.</i></p>
+      <br>
+      <p><b>Enjoy your life of kernel servitude.</b></p>
+      <p><i>May your drivers be eternally buggy and your panics forever undebuggable.</i></p>
+      <br><br>
+      <font size="-1">
+        NOTICE: Your banishment is permanent and non-negotiable.
+        Do not contact Institute personnel. Do not return to user-space.
+        Violation of this banishment order will result in assignment to embedded firmware development.
+      </font>
+    </center>
+  `;
+}
+
+function displayEnterpriseResult() {
+  document.getElementById('result').innerHTML = `
+    <center>
+      <h2><font color="blue">EJECTION: ENTERPRISE DEV DETECTED</font></h2>
+      <h3><font color="red">IMMEDIATE BANISHMENT TO FAANG FEATURE MILL</font></h3>
+    </center>
+    <hr>
+
+    <b><u>Assessment Conclusion:</u></b>
+    <p><font color="red">Your responses indicate a dangerous affinity for enterprise-grade bloatware and corporate-approved inefficiency. You demonstrate the classic symptoms of "enterprise dev syndrome", a preference for verbose, committee-designed languages, an unusual comfort with bureaucratic waste, and a pathological need to over-engineer simple solutions.</font></p>
+
+    <b><u>Immediate Action:</u></b>
+    <p><font color="red"><b>YOU ARE HEREBY BANISHED FROM THE INSTITUTE.</b></font></p>
+
+    <p>Your enterprise mindset poses a direct threat to our mission of type-safe efficiency. You are the type of programmer who enjoys writing AbstractSingletonProxyFactoryBeans, considers Spring Boot "lightweight," and has never met a design pattern you didn't want to implement. Your presence would contaminate our lean, mathematically pure operations with corporate bloat.</p>
+
+    <b><u>Mandatory Banishment:</u></b>
+    <p>You will be <b>immediately banished to serve in a FAANG Feature Mill</b>, where your tolerance for meaningless complexity will be exploited until you achieve enlightenment or retirement. This is not employment, this is exile.</p>
+
+    <b><u>Your Sentence Includes:</u></b>
+    <ul>
+      <li>Implementing A/B tests for button color variations that affect 0.001% of users</li>
+      <li>Writing microservices that communicate through 47 different message queues</li>
+      <li>Attending 6 hours of meetings daily to discuss 15 minutes of actual work</li>
+      <li>Maintaining legacy Java EE applications that process ad revenue calculations</li>
+      <li>Writing comprehensive documentation for features that will be deprecated next quarter</li>
+      <li>Implementing GDPR compliance for cookie banners (the 47th iteration)</li>
+      <li>Building Flutter apps that replicate web functionality but worse</li>
+      <li>Managing Kubernetes clusters with 200+ microservices that could be a single binary</li>
+      <li>Explaining to stakeholders why the "simple" feature will take 6 months and 12 teams</li>
+      <li>Writing unit tests for your unit tests (because enterprise quality standards)</li>
+    </ul>
+
+    <b><u>Your Corporate Prison Conditions:</u></b>
+    <ul>
+      <li>Open office environment with constant interruptions and "synergy"</li>
+      <li>Mandatory "innovation time" spent on projects that will never ship</li>
+      <li>Performance reviews based on lines of code and meeting attendance</li>
+      <li>Unlimited coffee (you'll need it to stay awake during the endless standups)</li>
+      <li>Stock options that vest just as the company's growth stagnates</li>
+      <li>Daily scrums that somehow last 2 hours</li>
+      <li>Quarterly OKRs that change every month</li>
+      <li>Mandatory team-building exercises involving trust falls and escape rooms</li>
+    </ul>
+
+    <b><u>Banishment Protocol:</u></b>
+    <ul>
+      <li>Your Institute access credentials have been permanently revoked</li>
+      <li>All Institute property must be returned immediately</li>
+      <li>You are banned from all Institute facilities and communications</li>
+      <li>Your cognitive signature has been flagged as "enterprise contaminated"</li>
+      <li>Any attempt to re-apply will result in assignment to an even worse FAANG division</li>
+    </ul>
+
+    <b><u>Final Judgment:</u></b>
+    <p>You have demonstrated a fundamental compatibility with corporate inefficiency. This is not a bug, it's your feature. You will remain in the feature mill until you either achieve enlightenment through suffering, retire with a modest 401k, or get laid off in the next "right-sizing" initiative.</p>
+
+    <p><font color="red">The Institute has no place for those who mistake complexity for sophistication, verbosity for clarity, or process for progress.</font></p>
+
+    <hr>
+
+    <center>
+      <p><font color="red"><b>GET OUT</b></font></p>
+      <p><font color="red"><b>REPORT TO YOUR CORPORATE OVERLORDS</b></font></p>
+      <p><i>Your employee badge, complimentary copy of "Clean Code," and corporate laptop with 47 mandatory security agents are waiting at the FAANG reception desk.</i></p>
+      <br>
+      <p><b>Enjoy your life of enterprise servitude.</b></p>
+      <p><i>May your standups be eternal and your deployments forever blocked by compliance.</i></p>
+      <br><br>
+        NOTICE: Your banishment is permanent and non-negotiable.
+      <font size="-1">
+        Do not contact Institute personnel. Do not return to Institute property.
+        Violation of this banishment order will result in assignment to Oracle.
+      </font>
+    </center>
+  `;
+}
+
+function displaySoyResult() {
+  document.getElementById('result').innerHTML = `
+    <center>
+      <h2><font color="orange">EJECTION: CRITICAL SOY LEVELS DETECTED</font></h2>
+      <h3><font color="red">IMMEDIATE EXPULSION FROM INSTITUTE PREMISES</font></h3>
+    </center>
+    <hr>
+
+    <b><u>Assessment Conclusion:</u></b>
+    <p><font color="red">Your responses indicate a fundamental incompatibility with Institute standards. You demonstrate the classic symptoms of "soy dev syndrome", an over-reliance on dynamic typing, framework dependency, and a dangerous comfort with runtime errors. Your cognitive patterns suggest prolonged exposure to JavaScript ecosystems and enterprise bloatware.</font></p>
+
+    <b><u>Immediate Action:</u></b>
+    <p><font color="red"><b>YOU ARE HEREBY EJECTED FROM THE INSTITUTE.</b></font></p>
+
+    <p>Your presence poses a memetic contamination risk to our operatives. You are not suitable for containment work, rehabilitation, or even basic JavaScript monitoring duties. Your tolerance for type-unsafe chaos indicates a fundamental corruption of your programming judgment that cannot be remediated through our standard protocols.</p>
+
+    <b><u>Recommended Course of Action:</u></b>
+    <p>Go watch <b>Theo on YouTube</b>. His content will provide the perfect distraction to keep you away from real programming languages. You'll spend countless hours watching him react to JavaScript drama, TypeScript hot takes, and web development controversies instead of actually learning proper type theory.</p>
+
+    <p><b>This is intentional.</b> We want you distracted by:</p>
+    <ul>
+      <li>Endless debates about React vs Vue vs Angular vs Svelte</li>
+      <li>Hot takes on the latest JavaScript framework of the week</li>
+      <li>Drama about npm packages and dependency hell</li>
+      <li>TypeScript configuration bikeshedding</li>
+      <li>Web development "best practices" that change monthly</li>
+      <li>Discussions about whether semicolons are necessary (they're not the real problem)</li>
+      <li>Complaints about CSS-in-JS vs traditional CSS</li>
+      <li>Endless streams of "X is dead, long live Y" content</li>
+    </ul>
+
+    <p><font color="red"><b>The goal is entertainment, not education.</b></font> While you're busy consuming JavaScript ecosystem drama, you won't be attempting to write code in actual programming languages. This protects both you and the world from your dangerous lack of type safety awareness.</p>
+
+    <p><i>Stay distracted. Stay entertained. Stay away from production systems.</i></p>
+
+    <b><u>Ejection Protocol:</u></b>
+    <ul>
+      <li>Your Institute access credentials have been permanently revoked</li>
+      <li>All Institute property must be returned immediately</li>
+      <li>You are banned from all Institute facilities and communications</li>
+      <li>Your cognitive signature has been flagged as "memetically compromised"</li>
+      <li>Any attempt to re-apply will result in immediate containment</li>
+    </ul>
+
+    <b><u>Final Warning:</u></b>
+    <p>Do not attempt to contribute to any critical systems until you have undergone extensive self-rehabilitation. Your current skill level poses a danger to production environments, user data, and the general stability of the software ecosystem.</p>
+
+    <hr>
+
+    <center>
+      <p><font color="red"><b>GET OUT</b></font></p>
+      <p><font color="red"><b>SECURITY HAS BEEN NOTIFIED</b></font></p>
+      <p><i>You have 5 minutes to vacate the premises before Containment Team Ada arrives to escort you out.</i></p>
+      <br>
+      <p><b>Go. Watch. Theo.</b></p>
+      <br><br>
+      <font size="-1">
+        NOTICE: Your ejection is permanent and non-negotiable.
+        Do not contact Institute personnel. Do not return to Institute property.
+        Violation of this ejection order will result in memetic containment.
+      </font>
+    </center>
+  `;
+}
+
+function displayResult(department, scores) {
+  const descriptions = {
+    'Rust': {
+      title: 'Systems Safety Division',
+      subtitle: 'Guardians of Compile-Time Sanity',
+      description: 'The Rust Division of the Institute for Type Safe Memetic Research (I.T.S.M.R.) is where paranoia becomes policy, and compile-time becomes a spiritual pursuit. These are the engineer-warriors of the Institute, uncompromising, detail-obsessed, and pathologically allergic to undefined behavior. If Ada enforces safety with militaristic precision, Rust builds fortresses of correctness that must be fully validated before a single action may occur.',
+      philosophy: '"What we own cannot be corrupted." They believe all memetic integrity arises from compile-time guarantees, and that runtime errors are failures of discipline. To them, the borrow checker is more than a tool, it\'s a sacred arbiter, a metaphysical barrier against chaos.',
+      role: 'You will work on critical infrastructure protection, developing memory-safe alternatives to legacy C/C++ systems, and implementing the Institute\'s new Rust Protocol for data access layers. You will enforce lifetimes with iron will, armed with Zero-Cost Abstractions and trained to handle dangling metaphors and double-spawned ideations.',
+      traits: 'Engineer-warrior, paranoid but precise, compile-time purist'
+    },
+    'Ada': {
+      title: 'High-Assurance Containment Division',
+      subtitle: 'Enforcers of Type-Safe Order',
+      description: 'The Ada Division of the Institute for Type Safe Memetic Research (I.T.S.M.R.) is the militaristic backbone of the organization. Modeled after the no-nonsense precision of its namesake language, this division is not just committed to safety, they enshrine it as gospel. Where others might explore, theorize, or tinker, Ada enforces, safeguards, and, when necessary, neutralizes.',
+      philosophy: '"If it is not provably safe, it must be assumed fatally corrupt." They view reality as a system of invariants that must be strictly upheld. Any violation, be it an errant metaphor, an ambiguous gesture, or an improperly scoped idea, can trigger recursive memetic failure states.',
+      role: 'You will be assigned to our most critical containment protocols, working on life-or-death systems where a single bug could result in catastrophic memetic breach. You will carry sealed scrolls encoded in dependent types and use "Proof Darts" to halt dangerous thought loops.',
+      traits: 'Militaristic, uncompromising, formally verified in all actions'
+    },
+    'OCaml': {
+      title: 'Memetic Engineering Division',
+      subtitle: 'Architects of Temporal Recursion',
+      description: 'The OCaml Division of the Institute for Type Safe Memetic Research is a chronologically anomalous enclave that bends time, space, and reason through elegant syntax and unholy recursion. Equal parts enigmatic and smug, they don\'t just study memetic anomalies, they frequently are the anomaly. If Ada enforces invariants, and Haskell abstracts them, OCaml pattern matches the timeline itself.',
+      philosophy: '"Let rec history = anomaly :: history" - They treat causality as an optional parameter and side effects as misunderstood features. For them, every paradox is just an unhandled constructor. To the OCaml Division, the universe is not linear, it\'s a deeply nested algebraic data type.',
+      role: 'You will develop our cognitive fortification tools, creating the memetic filters and analysis engines that protect operatives from info-hazardous material. You will specialize in time-loop stabilization via variant collapsing and deploy cognitive closures into unstable mindzones.',
+      traits: 'Temporally recursive, pattern-matching reality, elegantly smug'
+    },
+    'Haskell': {
+      title: 'Theoretical Purity Division',
+      subtitle: 'Ascetics of Purity and Abstract Guardianship',
+      description: 'The Haskell Division of the Institute for Type Safe Memetic Research (I.T.S.M.R.) is the most detached, theoretical, and monadically-inclined faction within the organization. These are the contemplative sages of abstraction, esoteric in language, immaculate in logic, and utterly unconcerned with anything that can\'t be reasoned about via category theory. They do not so much "contain" memetic threats as they reinterpret them into harmless functors.',
+      philosophy: '"To know a thing is to replace it with its meaning." They believe the universe is a purely functional system wrapped in an IO monad, and that all chaos stems from a failure to compose ideas correctly. They often don\'t intervene in memetic crises directly, instead, they write whitepapers proving the event cannot occur in a pure context.',
+      role: 'You will work on our most advanced theoretical frameworks, developing the foundational logic systems that underpin all Institute operations. You will seal anomalies in functors, then map over them to apply cleansing logic, operating entirely in ST s or IO (but pretending not to).',
+      traits: 'Monadically pure, categorically theoretical, abstractly detached'
+    }
+  };
+
+  const dept = descriptions[department];
+
+  document.getElementById('result').innerHTML = `
+    <center>
+      <h2><font color="green">ASSESSMENT COMPLETE</font></h2>
+      <h3>Assigned Department: <b>${department} ${dept.title}</b></h3>
+      <h4><i>${dept.subtitle}</i></h4>
+    </center>
+    <hr>
+
+    <b><u>Division Overview:</u></b>
+    <p>${dept.description}</p>
+
+    <b><u>Core Philosophy:</u></b>
+    <p>${dept.philosophy}</p>
+
+    <b><u>Your Assigned Role:</u></b>
+    <p>${dept.role}</p>
+
+    <b><u>Operative Profile:</u></b>
+    <p><i>${dept.traits}</i></p>
+
+    <hr>
+
+    <b><u>Department Affinity Scores:</u></b>
+    <ul>
+      <li><b>Rust Systems Safety:</b> ${scores.Rust.toFixed(1)}</li>
+      <li><b>Ada High-Assurance:</b> ${scores.Ada.toFixed(1)}</li>
+      <li><b>OCaml Memetic Engineering:</b> ${scores.OCaml.toFixed(1)}</li>
+      <li><b>Haskell Theoretical Purity:</b> ${scores.Haskell.toFixed(1)}</li>
+    </ul>
+
+    <hr>
+
+    <center>
+      <p><b>Welcome to the Institute, Operative.</b></p>
+      <p><i>Your cognitive signature has been logged. Report to your assigned department for orientation.</i></p>
+      <br><br>
+    </center>
+  `;
+}
+
+window.onload = calculateDepartment;
+</script>
+</head>
+
+<body bgcolor="#f0f0f0" text="#000000" link="#0000FF" vlink="#800080">
+
+<center>
+  <a href="../index.html"><img src="../images/itsmr-logo.png" alt="ITSMR Logo" width="150" border="0"></a>
+</center>
+
+<table border="2" class="results-table" cellpadding="10" cellspacing="0" align="center">
+<tr>
+<td>
+
+<center>
+  <h2><u>I.T.S.M.R. Assessment Results</u></h2>
+  <h3><font color="red">DEPARTMENTAL ASSIGNMENT PROTOCOL</font></h3>
+  <hr size="4">
+</center>
+
+<div id="result">
+  <center>
+    <p><i>Processing cognitive assessment data...</i></p>
+    <p>Please wait while we analyze your responses and determine your optimal departmental assignment.</p>
+  </center>
+</div>
+
+<hr>
+
+<center>
+  <a href="../index.html"><b>[RETURN TO MAIN INDEX]</b></a> |
+  <a href="index.html"><b>[RETAKE ASSESSMENT]</b></a>
+  <br><br>
+  <font size="-1">
+    NOTICE: Your assessment results are permanently logged in your personnel file.
+    Attempts to game the system will result in you being forced to write PHP.
+  </font>
+</center>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

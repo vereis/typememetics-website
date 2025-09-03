@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<title>ITSMR :: Cognitive Assessment Protocol</title>
+<script>
+const languages = [
+  { id: 'q1', name: 'Haskell', desc: 'Pure functional, lazy evaluation, strong static typing' },
+  { id: 'q2', name: 'JavaScript', desc: 'Dynamic typing, prototype-based, ubiquitous web presence' },
+  { id: 'q3', name: 'Rust', desc: 'Memory safety, ownership system, zero-cost abstractions' },
+  { id: 'q4', name: 'PHP', desc: 'Dynamic web scripting, loose typing, rapid development' },
+  { id: 'q5', name: 'Ada', desc: 'Military-grade, high-assurance, strong typing, formal verification' },
+  { id: 'q6', name: 'C', desc: 'Manual memory management, pointer arithmetic, undefined behavior' },
+  { id: 'q7', name: 'OCaml', desc: 'Functional/imperative hybrid, strong inference, module system' },
+  { id: 'q8', name: 'Python', desc: 'Dynamic typing, duck typing, "batteries included" philosophy' },
+  { id: 'q9', name: 'Assembly Language', desc: 'Direct hardware control, no abstractions, maximum performance' },
+  { id: 'q10', name: 'Go', desc: 'Garbage collected, simple syntax, concurrent programming' },
+  { id: 'q11', name: 'C++', desc: 'Object-oriented C, template metaprogramming, undefined behavior' },
+  { id: 'q12', name: 'Common Lisp', desc: 'Homoiconic, dynamic, self-modifying code, S-expressions' },
+  { id: 'q13', name: 'Clojure', desc: 'Lisp on JVM, immutable data, dynamic typing, pragmatic' },
+  { id: 'q14', name: 'Java', desc: 'Enterprise-grade, verbose, object-oriented, garbage collected' },
+  { id: 'q15', name: 'C#', desc: 'Microsoft ecosystem, managed memory, enterprise development' },
+  { id: 'q16', name: 'Lean', desc: 'Theorem prover, dependent types, mathematical foundations' },
+  { id: 'q17', name: 'Agda', desc: 'Dependently typed, proof assistant, total functional programming' },
+  { id: 'q18', name: 'Coalton', desc: 'Statically typed functional language that "supercharges" Common Lisp' },
+  { id: 'q19', name: 'Ruby', desc: 'Dynamic typing, metaprogramming, "developer happiness" philosophy' },
+  { id: 'q20', name: 'Swift', desc: 'Apple ecosystem, memory safety, strong typing, protocol-oriented' },
+  { id: 'q21', name: 'Kotlin', desc: 'JVM interop, null safety, concise syntax, Android development' },
+  { id: 'q22', name: 'TypeScript', desc: 'JavaScript with static typing, gradual typing, web development' },
+  { id: 'q23', name: 'Scala', desc: 'Functional/OO hybrid, advanced type system, JVM, actor model' },
+  { id: 'q24', name: 'Elixir', desc: 'Actor model, functional, BEAM VM, "let it crash" philosophy' },
+  { id: 'q25', name: 'Dart', desc: 'Google\'s language, Flutter development, object-oriented, null safety' },
+  { id: 'q26', name: 'Julia', desc: 'Scientific computing, dynamic typing, high performance, multiple dispatch' },
+  { id: 'q27', name: 'R', desc: 'Statistical computing, domain-specific, functional elements, data analysis' },
+  { id: 'q28', name: 'ClojureScript', desc: 'Clojure compiled to JavaScript, functional, immutable, browser-based' },
+  { id: 'q29', name: 'Perl', desc: 'Regular expressions, "there\'s more than one way to do it", cryptic syntax' },
+  { id: 'q30', name: 'Fortran', desc: 'Scientific computing, legacy HPC, mathematical libraries, fixed-format' }
+];
+
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+function generateLanguageRows() {
+  const shuffledLanguages = shuffleArray(languages);
+  const tableBody = document.getElementById('language-table-body');
+
+  shuffledLanguages.forEach(lang => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td><b>${lang.name}</b><br><i>${lang.desc}</i></td>
+      <td align="center"><input type="radio" name="${lang.id}" value="1"></td>
+      <td align="center"><input type="radio" name="${lang.id}" value="2"></td>
+      <td align="center"><input type="radio" name="${lang.id}" value="3"></td>
+      <td align="center"><input type="radio" name="${lang.id}" value="4"></td>
+      <td align="center"><input type="radio" name="${lang.id}" value="5"></td>
+      <td align="center"><input type="radio" name="${lang.id}" value="6"></td>
+      <td align="center"><input type="radio" name="${lang.id}" value="7"></td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+
+function validateAssessment() {
+  const totalQuestions = 30;
+  const unanswered = [];
+
+  for (let i = 1; i <= totalQuestions; i++) {
+    const radios = document.getElementsByName(`q${i}`);
+    let answered = false;
+
+    for (let j = 0; j < radios.length; j++) {
+      if (radios[j].checked) {
+        answered = true;
+        break;
+      }
+    }
+
+    if (!answered) {
+      unanswered.push(i);
+    }
+  }
+
+  if (unanswered.length > 0) {
+    alert(`ASSESSMENT INCOMPLETE\n\nYou must answer all ${totalQuestions} questions before submission.\n\nUnanswered questions: ${unanswered.join(', ')}\n\nFailure to complete the full assessment may result in assignment to the JavaScript Containment Division.`);
+    return false;
+  }
+
+  return true;
+}
+
+window.onload = function() {
+  generateLanguageRows();
+};
+</script>
+</head>
+
+<body bgcolor="#f0f0f0" text="#000000" link="#0000FF" vlink="#800080">
+
+<center>
+  <a href="../index.html"><img src="../images/itsmr-logo.png" alt="ITSMR Logo" width="150" border="0"></a>
+</center>
+
+<table border="2" width="90%" cellpadding="10" cellspacing="0" align="center">
+<tr>
+<td>
+
+<center>
+  <h2><u>I.T.S.M.R. Cognitive Assessment Protocol</u></h2>
+  <h3><font color="red">MANDATORY DEPARTMENTAL ASSIGNMENT EVALUATION</font></h3>
+  <hr size="4">
+</center>
+
+<p><b>Instructions:</b> Rate each programming language on a scale from 1 to 7, where:</p>
+<ul>
+  <li><b>1 = Severe Cognitohazard</b> (Immediate threat to cognitive integrity)</li>
+  <li><b>2 = High Risk</b> (Significant memetic contamination potential)</li>
+  <li><b>3 = Moderate Risk</b> (Requires protective protocols)</li>
+  <li><b>4 = Neutral</b> (Neither protective nor hazardous)</li>
+  <li><b>5 = Low Protection</b> (Minimal cognitive shielding)</li>
+  <li><b>6 = High Protection</b> (Strong memetic defense capabilities)</li>
+  <li><b>7 = Maximum Protection</b> (Ideal for cognitive fortification)</li>
+</ul>
+
+<p><i>Your responses will determine your optimal departmental assignment within the Institute.</i></p>
+<p><font color="red"><b>NOTE:</b> Language order is randomized for each assessment to prevent cognitive bias.</font></p>
+
+<hr>
+
+<form action="results.html" method="get" onsubmit="return validateAssessment()">
+
+<table border="1" cellpadding="5" cellspacing="0" width="100%">
+  <tr bgcolor="#c0c0c0">
+    <th align="left" width="30%">Programming Language</th>
+    <th align="center">1</th>
+    <th align="center">2</th>
+    <th align="center">3</th>
+    <th align="center">4</th>
+    <th align="center">5</th>
+    <th align="center">6</th>
+    <th align="center">7</th>
+  </tr>
+  <tbody id="language-table-body">
+  </tbody>
+</table>
+
+<br>
+<center>
+  <input type="submit" value="SUBMIT ASSESSMENT">
+  <input type="reset" value="CLEAR RESPONSES">
+</center>
+
+</form>
+
+<hr>
+
+<center>
+  <a href="../index.html"><b>[RETURN TO MAIN INDEX]</b></a>
+  <br><br>
+  <font size="-1">
+    NOTICE: This assessment is mandatory for all new Institute personnel.
+    Failure to complete may result in assignment to the JavaScript Containment Division.
+    All 30 questions must be answered for valid departmental assignment.
+    <br><br>
+    <font color="red">MEMETIC COUNTERMEASURE:</font> Language presentation order is randomized
+    to prevent position bias and memorization-based gaming attempts.
+  </font>
+</center>
+
+</td>
+</tr>
+</table>
+
+<script>
+function randomizeAnswers() {
+  const totalQuestions = 30;
+
+  for (let i = 1; i <= totalQuestions; i++) {
+    const radios = document.getElementsByName(`q${i}`);
+    if (radios.length > 0) {
+      const randomIndex = Math.floor(Math.random() * radios.length);
+
+      radios.forEach(r => r.checked = false);
+
+      radios[randomIndex].checked = true;
+    }
+  }
+}
+</script>
+</body>
+</html>
+
