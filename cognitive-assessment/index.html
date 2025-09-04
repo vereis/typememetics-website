@@ -1,7 +1,120 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ITSMR :: Cognitive Assessment Protocol</title>
+<style>
+/* Mobile-first responsive design */
+@media screen and (max-width: 768px) {
+  body { 
+    margin: 5px; 
+    font-size: 14px;
+  }
+  
+  /* Main container adjustments */
+  table[width="90%"] {
+    width: 100% !important;
+    border: 1px solid #000;
+  }
+  
+  /* Logo scaling */
+  img {
+    max-width: 120px !important;
+    width: 120px !important;
+  }
+  
+  /* Hide desktop table on mobile */
+  .desktop-table {
+    display: none;
+  }
+  
+  /* Show mobile cards */
+  .mobile-cards {
+    display: block;
+  }
+  
+  .language-card {
+    border: 1px solid #666;
+    margin: 10px 0;
+    padding: 12px;
+    background: #fff;
+    border-radius: 3px;
+  }
+  
+  .language-name {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .language-desc {
+    font-style: italic;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #333;
+  }
+  
+  .rating-scale {
+    font-size: 12px;
+    margin-bottom: 8px;
+    color: #666;
+    text-align: center;
+  }
+  
+  .rating-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+  }
+  
+  .rating-wrapper {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .rating-wrapper input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+  
+  .rating-wrapper label {
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 2px;
+  }
+  
+  /* Larger submit buttons */
+  input[type="submit"], input[type="reset"] {
+    padding: 12px 20px;
+    font-size: 16px;
+    margin: 8px 5px;
+    min-width: 120px;
+  }
+  
+  /* Instruction list improvements */
+  ul {
+    padding-left: 20px;
+  }
+  
+  li {
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+}
+
+/* Desktop: hide mobile cards */
+@media screen and (min-width: 769px) {
+  .mobile-cards {
+    display: none;
+  }
+  
+  .desktop-table {
+    display: table;
+  }
+}
+</style>
 <script>
 const languages = [
   { id: 'q1', name: 'Haskell', desc: 'Pure functional, lazy evaluation, strong static typing' },
@@ -55,8 +168,10 @@ function shuffleArray(array) {
 function generateLanguageRows() {
   const shuffledLanguages = shuffleArray(languages);
   const tableBody = document.getElementById('language-table-body');
+  const mobileCards = document.getElementById('mobile-cards');
 
   shuffledLanguages.forEach(lang => {
+    // Desktop table row
     const row = document.createElement('tr');
     row.innerHTML = `
       <td><b>${lang.name}</b><br><i>${lang.desc}</i></td>
@@ -69,6 +184,46 @@ function generateLanguageRows() {
       <td align="center"><input type="radio" name="${lang.id}" value="7"></td>
     `;
     tableBody.appendChild(row);
+
+    // Mobile card
+    const card = document.createElement('div');
+    card.className = 'language-card';
+    card.innerHTML = `
+      <div class="language-name">${lang.name}</div>
+      <div class="language-desc">${lang.desc}</div>
+      <div class="rating-scale">1=Severe Hazard → 4=Neutral → 7=Maximum Protection</div>
+      <div class="rating-buttons">
+        <div class="rating-wrapper">
+          <input type="radio" name="${lang.id}" value="1" id="${lang.id}_1_mobile">
+          <label for="${lang.id}_1_mobile">1</label>
+        </div>
+        <div class="rating-wrapper">
+          <input type="radio" name="${lang.id}" value="2" id="${lang.id}_2_mobile">
+          <label for="${lang.id}_2_mobile">2</label>
+        </div>
+        <div class="rating-wrapper">
+          <input type="radio" name="${lang.id}" value="3" id="${lang.id}_3_mobile">
+          <label for="${lang.id}_3_mobile">3</label>
+        </div>
+        <div class="rating-wrapper">
+          <input type="radio" name="${lang.id}" value="4" id="${lang.id}_4_mobile">
+          <label for="${lang.id}_4_mobile">4</label>
+        </div>
+        <div class="rating-wrapper">
+          <input type="radio" name="${lang.id}" value="5" id="${lang.id}_5_mobile">
+          <label for="${lang.id}_5_mobile">5</label>
+        </div>
+        <div class="rating-wrapper">
+          <input type="radio" name="${lang.id}" value="6" id="${lang.id}_6_mobile">
+          <label for="${lang.id}_6_mobile">6</label>
+        </div>
+        <div class="rating-wrapper">
+          <input type="radio" name="${lang.id}" value="7" id="${lang.id}_7_mobile">
+          <label for="${lang.id}_7_mobile">7</label>
+        </div>
+      </div>
+    `;
+    mobileCards.appendChild(card);
   });
 }
 
@@ -140,7 +295,7 @@ window.onload = function() {
 
 <form action="results.html" method="get" onsubmit="return validateAssessment()">
 
-<table border="1" cellpadding="5" cellspacing="0" width="100%">
+<table border="1" cellpadding="5" cellspacing="0" width="100%" class="desktop-table">
   <tr bgcolor="#c0c0c0">
     <th align="left" width="30%">Programming Language</th>
     <th align="center">1</th>
@@ -154,6 +309,9 @@ window.onload = function() {
   <tbody id="language-table-body">
   </tbody>
 </table>
+
+<div class="mobile-cards" id="mobile-cards">
+</div>
 
 <br>
 <center>
